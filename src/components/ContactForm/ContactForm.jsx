@@ -2,6 +2,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useId } from 'react';
 import * as Yup from 'yup';
 import css from './ContactForm.module.css';
+import { useDispatch } from 'react-redux';
+import { addContacts } from '../../redux/contactsSlice';
 
 const contactSchema = Yup.object().shape({
   name: Yup.string()
@@ -13,7 +15,8 @@ const contactSchema = Yup.object().shape({
     .required('Required'),
 });
 
-export const ContactForm = ({ handleSubmit }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
   const initialValues = {
     name: '',
     number: '',
@@ -28,6 +31,11 @@ export const ContactForm = ({ handleSubmit }) => {
     if (number.length > 3) corected += `-` + number.slice(3, 5);
     if (number.length > 5) corected += `-` + number.slice(5, 7);
     e.target.value = corected;
+  };
+
+  const handleSubmit = (values, actions) => {
+    dispatch(addContacts(values));
+    actions.resetForm();
   };
 
   return (
