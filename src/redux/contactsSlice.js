@@ -1,11 +1,8 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
 
-let savedContacts = JSON.parse(window.localStorage.getItem('contacts'));
-savedContacts = savedContacts === null ? [] : savedContacts;
-
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: savedContacts,
+  initialState: [],
   reducers: {
     addContacts: {
       reducer(state, action) {
